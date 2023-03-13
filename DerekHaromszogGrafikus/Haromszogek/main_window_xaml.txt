@@ -1,0 +1,30 @@
+<Window x:Class="haromszogesbaszas.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:haromszogesbaszas"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid>
+            <Button x:Name="btn_1_betolt" Content="Adatok betöltése" HorizontalAlignment="Left" Margin="40,30,0,0" VerticalAlignment="Top" Width="129" Height="29" Click="Btn_1_betolt_Click"/>
+            <GroupBox Header="Hibák a kiválasztott állományban" HorizontalAlignment="Left" Height="100" Margin="40,82,0,0" VerticalAlignment="Top" Width="487">
+                <ListBox x:Name="gbox_1">
+
+                    </ListBox>
+            </GroupBox>
+            <GroupBox  Header="Derékszögű háromszögek" HorizontalAlignment="Left" Height="200" Margin="40,187,0,0" VerticalAlignment="Top" Width="198">
+                <ListBox x:Name="gbox_2" SelectionChanged="Gbox_2_SelectionChanged">
+
+                </ListBox>
+            </GroupBox>
+            <GroupBox  Header="Kiválasztott derékszögű háromszög adatai" HorizontalAlignment="Left" Height="100" Margin="243,187,0,0" VerticalAlignment="Top" Width="284">
+                <StackPanel>
+                    <TextBlock Name="Kerulet"></TextBlock>
+                    <TextBlock Name="Terulet"></TextBlock>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>

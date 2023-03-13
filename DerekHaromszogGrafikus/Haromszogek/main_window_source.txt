@@ -1,0 +1,74 @@
+using System.Windows;
+using Microsoft.Win32;
+using System.Windows.Shapes;
+using System.IO;
+using System.Collections.Generic;
+using System;
+using System.Windows.Controls;
+namespace haromszogesbaszas
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        List<DHaromszog> haromszogek;
+        public MainWindow()
+        {
+            InitializeComponent();
+            haromszogek = new List<DHaromszog>();
+        }
+        List<DHaromszog> Haromszogek { get => haromszogek; set => haromszogek = value; }
+        private void Btn_1_betolt_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            if(fileDialog.ShowDialog() == true)
+            {
+                gbox_1.Items.Clear();
+                gbox_2.Items.Clear();
+                StreamReader sr = new StreamReader(fileDialog.FileName);
+                int sorszam = 1;
+                while (!sr.EndOfStream)
+                {
+                    try
+                    {
+                        DHaromszog dHaromszog = new DHaromszog(sr.ReadLine(), sorszam);
+                        gbox_2.Items.Add(String.Format("{0}. sor a={1} b={2} c={3}",sorszam,dHaromszog.AOldal,dHaromszog.BOldal,dHaromszog.COldal));
+                        Haromszogek.Add(dHaromszog);
+                    }
+                    catch (AOldalhiba o)
+                    {
+                        gbox_1.Items.Add(o.HibaFormat(sorszam));
+                    }
+                    catch (BOldalhiba o)
+                    {
+                        gbox_1.Items.Add(o.HibaFormat(sorszam));
+                    }
+                    catch (COldalhiba o)
+                    {
+                        gbox_1.Items.Add(o.HibaFormat(sorszam));
+                    }
+                    catch (Novekvohiba n)
+                    {
+                        gbox_1.Items.Add(n.HibaFormat(sorszam));
+                    }
+                    catch (Derekszoghiba d)
+                    {
+                        gbox_1.Items.Add(d.HibaFormat(sorszam));
+                    }
+                    catch (Megszerkeszthetohiba m)
+                    {
+                        gbox_1.Items.Add(m.HibaFormat(sorszam));
+                    }
+                    sorszam++;
+                }
+                sr.Close();
+            }
+        }
+        private void Gbox_2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Kerulet.Text = String.Format("Kerület = {0}", Haromszogek[(sender as ListBox).SelectedIndex].Kerulet);
+            Terulet.Text = String.Format("Terület = {0}", Haromszogek[(sender as ListBox).SelectedIndex].Terulet);
+        }
+    }
+}
